@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>YM2203 Frequency Calculator</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" href="jquery-ui.min.css" />
+  <script type="text/javascript" src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  .ui-widget { font-size: 1em; }
+  .ui-selectmenu-button span.ui-selectmenu-text {
+    line-height: 1em;
+    padding-left: 0.4em;
+    padding-right: 0;
+  }
+
+  .spinner { width: 2.8em; /*height: 1em;*/ }
+  .select { width: 7em; height: 1em; }
+  .button-type { margin-bottom: 1em; }
+  .col-control { white-space: nowrap; }
+  .col-control-name { line-height: 1.4em; }
+  .col-control-unit { font-size: 80%; font-weight: bold; }
+
+  .freq { text-align: center; padding: 0.5em 0; white-space: nowrap; }
+  .freq-head { font-weight: bold; padding: 0.75em 0;  }
+  .freq-invalid { background-color: #ddd; color: #333; }
+  .freq-error001 { background-color: #fff8f8; }
+  .freq-error003 { background-color: #fff0f0; }
+  .freq-error005 { background-color: #ffe8e8; }
+  .freq-error01  { background-color: #ffe0e0; }
+  .freq-error03  { background-color: #ffd8d8; }
+  .freq-error05  { background-color: #ffd0d0; }
+  .freq-error1   { background-color: #ffc8c8; }
+  .freq-error3   { background-color: #ffc0c0; }
+  .freq-error5   { background-color: #ffb8b8; }
+  .freq-error10  { background-color: #ffb0b0; }
+  .freq-error30  { background-color: #ffa8a8; }
+  .freq-error50  { background-color: #ffa0a0; }
+  </style>
+  <script>
+  $(function() {
+    $('.button-type').buttonset().click(createFreqTable);
+    $('#spinner-master').spinner({
+      min: 0.7,
+      max: 4.2,
+      step: 0.01,
+      spin: createFreqTable,
+      stop: createFreqTable
+    })
+    $('#spinner-basefreq').spinner({
+      min: 420.0,
+      max: 460.0,
+      step: 0.1,
+      spin: createFreqTable,
+      stop: createFreqTable
+    });
+    $('#spinner-transpose').spinner({
+      min: -48,
+      max: 48,
+      step: 1,
+      spin: createFreqTable,
+      stop: createFreqTable
+    });
+    $('#spinner-block').spinner({
+      min: 0,
+      max: 7,
+      step: 1,
+      spin: createFreqTable,
+      stop: createFreqTable
+    });
+    $('#select-rounding').selectmenu({ change: createFreqTable });
+    $('#select-error').selectmenu({ change: createFreqTable });
+    $('#select-invalid').selectmenu({ change: createFreqTable });
+
+    createFreqTable();
+  });
+
+  function getError(expect, actual) {
+    return Math.abs(actual - expect) / expect;
+  }
+
+  function setErrorClass(element, expect, actual) {
+    var error = getError(expect, actual) * 100;
+
+    if (error >= 47.0)
+      element.addClass('freq-error50');
+    else if (error >= 21.0)
+      element.addClass('freq-error30');
+    else if (error >= 10.0)
+      element.addClass('freq-error10');
+    else if (error >= 4.7)
+      element.addClass('freq-error5');
+    else if (error >= 2.1)
+      element.addClass('freq-error3');
+    else if (error >= 1.0)
+      element.addClass('freq-error1');
+    else if (error >= 0.47)
+      element.addClass('freq-error05');
+    else if (error >= 0.21)
+      element.addClass('freq-error03');
+    else if (error >= 0.1)
+      element.addClass('freq-error01');
+    else if (error >= 0.047)
+      element.addClass('freq-error005');
+    else if (error >= 0.021)
+      element.addClass('freq-error003');
+    else if (error >= 0.01)
+      element.addClass('freq-error001');
+  }
+
+  function rounding(type, value) {
+    switch(type) {
+      case 1:
+        return Math.floor(value);
+      case 2:
+        return Math.ceil(value);
+      default:
+        return Math.round(value);
+    }
+  }
+
+  function createFreqTable() {
+    var master = $('.spinner-master').val() * 1.0e6;
+    var basefreq = $('.spinner-basefreq').val() * 1.0;
+    var transpose = $('.spinner-transpose').val() | 0;
+    var block = $('.spinner-block').val() | 0;
+    var roundingType = $('#select-rounding').prop("selectedIndex");
+    var showError = $('#select-error').prop("selectedIndex") == 0;
+    var showInvalid = $('#select-invalid').prop("selectedIndex") == 0;
+    var fmmode = $('#button-type-fm').prop('checked');
+
+    $('.spinner-block').spinner(fmmode ? 'enable' : 'disable');
+
+    $('#table-freq').empty();
+
+    for (var octave = -1, note = 0; octave < 8; octave++) {
+      var row = $('<div class="row"></div>');
+
+      for (var i = 0; i < 12; i++, note++) {
+        var freq = basefreq * Math.pow(2.0, (note + transpose - 69) / 12.0);
+        var num;
+
+        if (fmmode)
+          num = (144.0 * freq * Math.pow(2.0, 20.0) / master) / Math.pow(2.0, block - 1.0);
+        else
+          num = master / (freq * 64.0);
+        
+        var num_round = rounding(roundingType, num);
+        var element = $('<div class="col-xs-1 freq freq-item"></div>');
+        element.text(num_round | 0 + "");
+
+        if (showInvalid && (num_round >= (fmmode ? 2048 : 4096) || num_round <= 0))
+          element.addClass('freq-invalid');
+        else if(showError)
+          setErrorClass(element, num, num_round);
+
+        row.append(element);
+      }
+
+      $('#table-freq').append(row);
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <ul class="nav nav-pills pull-right">
+        <li class="active"><a href="#">Home</a></li>
+      </ul>
+    <h3 class="text-muted">YM2203 Frequency Calculator</h3>
+    <hr />
+  </div>
+  <div>
+    <div class="row">
+      <div class="col-xs-8 col-xs-push-4">
+        <div class="row">
+          <div class="col-xs-1 freq freq-head">C</div>
+          <div class="col-xs-1 freq freq-head">C#</div>
+          <div class="col-xs-1 freq freq-head">D</div>
+          <div class="col-xs-1 freq freq-head">D#</div>
+          <div class="col-xs-1 freq freq-head">E</div>
+          <div class="col-xs-1 freq freq-head">F</div>
+          <div class="col-xs-1 freq freq-head">F#</div>
+          <div class="col-xs-1 freq freq-head">G</div>
+          <div class="col-xs-1 freq freq-head">G#</div>
+          <div class="col-xs-1 freq freq-head">A</div>
+          <div class="col-xs-1 freq freq-head">A#</div>
+          <div class="col-xs-1 freq freq-head">B</div>
+        </div>
+        <div id="table-freq">
+
+        </div>
+      </div>
+      <div class="col-sm-4 col-sm-pull-8 col-control">
+        <div class="row">
+          <div class="col-xs-8 col-xs-offset-2">
+            <div class="button-type">
+              <input type="radio" id="button-type-psg" name="button-type" checked="checked" /><label for="button-type-psg">PSG音源</label>
+              <input type="radio" id="button-type-fm"  name="button-type" /><label for="button-type-fm">FM音源</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-control-name">
+            <label for="spinner-master">マスタクロック:</label>
+          </div>
+          <div class="col-xs-6">
+            <input class="spinner spinner-master" id="spinner-master" value="4.0" />
+            <span class="col-control-unit">MHz</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-control-name">
+            <label for="spinner-basefreq">基準周波数:</label>
+          </div>
+          <div class="col-xs-6">
+            <input class="spinner spinner-basefreq" id="spinner-basefreq" value="440.0" />
+            <span class="col-control-unit">Hz</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-control-name">
+            <label for="spinner-transpose">トランスポーズ:</label>
+          </div>
+          <div class="col-xs-6">
+            <input class="spinner spinner-transpose" id="spinner-transpose" value="0" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-control-name">
+            <label for="spinner-block">ブロック値:</label>
+          </div>
+          <div class="col-xs-6">
+            <input class="spinner spinner-block" id="spinner-block" value="0" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-control-name">
+            <label for="select-rounding">端数処理:</label>
+          </div>
+          <div class="col-xs-6">
+            <select class="select select-rounding" id="select-rounding">
+              <option selected="selected">四捨五入</option>
+              <option>切り捨て</option>
+              <option>切り上げ</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-control-name">
+            <label for="select-error">誤差強調:</label>
+          </div>
+          <div class="col-xs-6">
+            <select class="select select-error" id="select-error">
+              <option selected="selected">表示する</option>
+              <option>表示しない</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-control-name">
+            <label for="select-invalid">無効表示:</label>
+          </div>
+          <div class="col-xs-6">
+            <select class="select select-invalid" id="select-invalid">
+              <option selected="selected">表示する</option>
+              <option>表示しない</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <hr />
+      <p>Copyright &copy; 2015 Tomona Nanase</p>
+    </div>
+  </div>
+  <script src="jquery-ui.min.js"></script>
+</body>
+</html>
