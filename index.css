@@ -1,0 +1,29 @@
+.ui-widget { font-size: 1em; }
+.ui-selectmenu-button span.ui-selectmenu-text {
+  line-height: 1em;
+  padding-left: 0.4em;
+  padding-right: 0;
+}
+
+.spinner { width: 2.8em; /*height: 1em;*/ }
+.select { width: 7em; height: 1em; }
+.button-type { margin-bottom: 1em; }
+.col-control { white-space: nowrap; }
+.col-control-name { line-height: 1.4em; }
+.col-control-unit { font-size: 80%; font-weight: bold; }
+
+.freq { text-align: center; padding: 0.5em 0; white-space: nowrap; }
+.freq-head { font-weight: bold; padding: 0.75em 0;  }
+.freq-invalid { background-color: #ddd; color: #333; }
+.freq-error001 { background-color: #fff8f8; }
+.freq-error003 { background-color: #fff0f0; }
+.freq-error005 { background-color: #ffe8e8; }
+.freq-error01  { background-color: #ffe0e0; }
+.freq-error03  { background-color: #ffd8d8; }
+.freq-error05  { background-color: #ffd0d0; }
+.freq-error1   { background-color: #ffc8c8; }
+.freq-error3   { background-color: #ffc0c0; }
+.freq-error5   { background-color: #ffb8b8; }
+.freq-error10  { background-color: #ffb0b0; }
+.freq-error30  { background-color: #ffa8a8; }
+.freq-error50  { background-color: #ffa0a0; }
