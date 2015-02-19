@@ -29,7 +29,12 @@ $(function() {
     stop: createFreqTable
   });
   $('#select-rounding').selectmenu({ change: createFreqTable });
-  $('#select-error').selectmenu({ change: createFreqTable });
+  $('#select-error').selectmenu({
+    change: function() {
+      ($('#select-error').prop("selectedIndex") == 0) ? $('#table-error').fadeIn() : $('#table-error').fadeOut();
+      createFreqTable();
+    }
+  });
   $('#select-invalid').selectmenu({ change: createFreqTable });
 
   createFreqTable();
