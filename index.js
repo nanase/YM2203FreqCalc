@@ -42,27 +42,27 @@ function getError(expect, actual) {
 function setErrorClass(element, expect, actual) {
   var error = getError(expect, actual) * 100;
 
-  if (error >= 47.0)
+  if (error >= 46.42)
     element.addClass('freq-error50');
-  else if (error >= 21.0)
+  else if (error >= 21.54)
     element.addClass('freq-error30');
   else if (error >= 10.0)
     element.addClass('freq-error10');
-  else if (error >= 4.7)
+  else if (error >= 4.642)
     element.addClass('freq-error5');
-  else if (error >= 2.1)
+  else if (error >= 2.154)
     element.addClass('freq-error3');
   else if (error >= 1.0)
     element.addClass('freq-error1');
-  else if (error >= 0.47)
+  else if (error >= 0.4642)
     element.addClass('freq-error05');
-  else if (error >= 0.21)
+  else if (error >= 0.2154)
     element.addClass('freq-error03');
   else if (error >= 0.1)
     element.addClass('freq-error01');
-  else if (error >= 0.047)
+  else if (error >= 0.04642)
     element.addClass('freq-error005');
-  else if (error >= 0.021)
+  else if (error >= 0.02154)
     element.addClass('freq-error003');
   else if (error >= 0.01)
     element.addClass('freq-error001');
