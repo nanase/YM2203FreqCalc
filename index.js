@@ -31,7 +31,7 @@ $(function() {
   $('#select-rounding').selectmenu({ change: createFreqTable });
   $('#select-error').selectmenu({
     change: function() {
-      ($('#select-error').prop("selectedIndex") == 0) ? $('#table-error').fadeIn() : $('#table-error').fadeOut();
+      $('#table-error').stop(true)[($('#select-error').prop("selectedIndex") == 0) ? 'fadeIn' : 'fadeOut']();
       createFreqTable();
     }
   });
