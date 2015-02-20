@@ -111,8 +111,16 @@ function createFreqTable() {
         num = master / (freq * 64.0);
       
       var num_round = rounding(roundingType, num);
-      var element = $('<div class="col-xs-1 freq freq-item"></div>');
-      element.text(num_round | 0 + "");
+      var element = $('<div class="col-xs-1 freq freq-item"></div>')
+        .text(num_round | 0 + "")
+        .mouseenter(showPopup(note))
+        .mousemove(function(e) {
+          $('.popup-freq')
+            .css({
+              left: (e.pageX + 20) + 'px',
+              top: (e.pageY + 20) + 'px'
+            })
+        });
 
       if (showInvalid && (num_round >= (fmmode ? 2048 : 4096) || num_round <= 0))
         element.addClass('freq-invalid');
@@ -122,6 +130,34 @@ function createFreqTable() {
       row.append(element);
     }
 
-    $('#table-freq').append(row);
+    $('#table-freq')
+      .append(row)
+      .mouseleave(function() { $('.popup-freq').hide(); });
+  }
+}
+
+function showPopup(note) {
+  return function(e) {
+    var master = $('.spinner-master').val() * 1.0e6;
+    var basefreq = $('.spinner-basefreq').val() * 1.0;
+    var transpose = $('.spinner-transpose').val() | 0;
+    var block = $('.spinner-block').val() | 0;
+    var roundingType = $('#select-rounding').prop("selectedIndex");
+    var fmmode = $('#button-type-fm').prop('checked');
+    var freq = basefreq * Math.pow(2.0, (note + transpose - 69) / 12.0);
+
+    if (fmmode)
+      num = (144.0 * freq * Math.pow(2.0, 20.0) / master) / Math.pow(2.0, block - 1.0);
+    else
+      num = master / (freq * 64.0);
+
+    var num_round = rounding(roundingType, num);
+    var error = getError(num, num_round) * 100.0;
+
+    $('#popup-notenum').text(note);
+    $('#popup-freq').text(Math.round(freq * 10.0) / 10.0);
+    $('#popup-num').text(num_round);
+    $('#popup-error').text((error < 0 ? '-' : '+') + Math.round(error * 100.0) / 100.0 + '');
+    $('.popup-freq').show();
   }
 }

@@ -27,3 +27,15 @@
 .freq-error10  { background-color: #ffb0b0; }
 .freq-error30  { background-color: #ffa8a8; }
 .freq-error50  { background-color: #ffa0a0; }
+
+.popup { 
+  z-index: 10;
+  padding: 0.5em;
+  border: 1px solid #888;
+  box-shadow: 0 0 3px #aaa;
+  /*width: 200px;*/
+  background-color: white;
+  text-align: left;
+  position: absolute;
+  display: none;
+}
