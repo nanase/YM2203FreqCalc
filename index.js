@@ -98,7 +98,7 @@ function createFreqTable() {
 
   $('#table-freq').empty();
 
-  for (var octave = -1, note = 0; octave < 8; octave++) {
+  for (var octave = -1, note = 0; octave < 9; octave++) {
     var row = $('<div class="row"></div>');
 
     for (var i = 0; i < 12; i++, note++) {
