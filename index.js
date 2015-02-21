@@ -157,7 +157,7 @@ function showPopup(note) {
     $('#popup-notenum').text(note);
     $('#popup-freq').text(Math.round(freq * 10.0) / 10.0);
     $('#popup-num').text(num_round);
-    $('#popup-error').text((error < 0 ? '-' : '+') + Math.round(error * 100.0) / 100.0 + '');
+    $('#popup-error').text(Math.round(error * 100.0) / 100.0 + '');
     $('.popup-freq').show();
   }
 }
