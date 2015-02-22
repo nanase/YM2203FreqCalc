@@ -101,16 +101,16 @@ function createFreqTable() {
   var fmmode = $('#button-type-fm').prop('checked');
 
   $('.spinner-block').spinner(fmmode ? 'enable' : 'disable');
-
   $('#table-freq').empty();
 
-  for (var octave = -1, note = 0; octave < 9; octave++) {
+  for (var octave = -1, note = 0; octave <= 9; octave++) {
     var row = $('<div class="row"></div>');
 
     for (var i = 0; i < 12; i++, note++) {
       var freq = basefreq * Math.pow(2.0, (note + transpose - 69) / 12.0);
       var num = calculateFreqNumber(fmmode, freq, master, block);
       var num_round = rounding(roundingType, num);
+
       var element = $('<div class="col-xs-1 freq freq-item"></div>')
         .text(num_round | 0 + "")
         .mouseenter(showPopup(note))
