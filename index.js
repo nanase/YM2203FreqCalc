@@ -90,26 +90,32 @@ function calculateFreqNumber(fmmode, freq, master, block) {
                   master / (freq * 64.0);
 }
 
-function createFreqTable() {
-  var master = $('.spinner-master').val() * 1.0e6;
-  var basefreq = $('.spinner-basefreq').val() * 1.0;
-  var transpose = $('.spinner-transpose').val() | 0;
-  var block = $('.spinner-block').val() | 0;
-  var roundingType = $('#select-rounding').prop("selectedIndex");
-  var showError = $('#select-error').prop("selectedIndex") == 0;
-  var showInvalid = $('#select-invalid').prop("selectedIndex") == 0;
-  var fmmode = $('#button-type-fm').prop('checked');
+function getFormValues() {
+  return {
+    master:       $('.spinner-master').val() * 1.0e6,
+    basefreq:     $('.spinner-basefreq').val() * 1.0,
+    transpose:    $('.spinner-transpose').val() | 0,
+    block:        $('.spinner-block').val() | 0,
+    roundingType: $('#select-rounding').prop("selectedIndex") | 0,
+    showError:    $('#select-error').prop("selectedIndex") === 0,
+    showInvalid:  $('#select-invalid').prop("selectedIndex") === 0,
+    fmmode:       $('#button-type-fm').prop('checked')
+  };
+}
 
-  $('.spinner-block').spinner(fmmode ? 'enable' : 'disable');
+function createFreqTable() {
+  var v = getFormValues();
+
+  $('.spinner-block').spinner(v.fmmode ? 'enable' : 'disable');
   $('#table-freq').empty();
 
   for (var octave = -1, note = 0; octave <= 9; octave++) {
     var row = $('<div class="row"></div>');
 
     for (var i = 0; i < 12; i++, note++) {
-      var freq = basefreq * Math.pow(2.0, (note + transpose - 69) / 12.0);
-      var num = calculateFreqNumber(fmmode, freq, master, block);
-      var num_round = rounding(roundingType, num);
+      var freq = v.basefreq * Math.pow(2.0, (note + v.transpose - 69) / 12.0);
+      var num = calculateFreqNumber(v.fmmode, freq, v.master, v.block);
+      var num_round = rounding(v.roundingType, num);
 
       var element = $('<div class="col-xs-1 freq freq-item"></div>')
         .text(num_round | 0 + "")
@@ -122,9 +128,9 @@ function createFreqTable() {
             })
         });
 
-      if (showInvalid && (num_round >= (fmmode ? 2048 : 4096) || num_round <= 0))
+      if (v.showInvalid && (num_round >= (v.fmmode ? 2048 : 4096) || num_round <= 0))
         element.addClass('freq-invalid');
-      else if(showError)
+      else if(v.showError)
         setErrorClass(element, num, num_round);
 
       row.append(element);
@@ -138,15 +144,10 @@ function createFreqTable() {
 
 function showPopup(note) {
   return function(e) {
-    var master = $('.spinner-master').val() * 1.0e6;
-    var basefreq = $('.spinner-basefreq').val() * 1.0;
-    var transpose = $('.spinner-transpose').val() | 0;
-    var block = $('.spinner-block').val() | 0;
-    var roundingType = $('#select-rounding').prop("selectedIndex");
-    var fmmode = $('#button-type-fm').prop('checked');
-    var freq = basefreq * Math.pow(2.0, (note + transpose - 69) / 12.0);
-    var num = calculateFreqNumber(fmmode, freq, master, block);
-    var num_round = rounding(roundingType, num);
+    var v = getFormValues();
+    var freq = v.basefreq * Math.pow(2.0, (note + v.transpose - 69) / 12.0);
+    var num = calculateFreqNumber(v.fmmode, freq, v.master, v.block);
+    var num_round = rounding(v.roundingType, num);
     var error = getError(num, num_round) * 100.0;
 
     $('#popup-notenum').text(note);
