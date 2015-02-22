@@ -84,6 +84,12 @@ function rounding(type, value) {
   }
 }
 
+function calculateFreqNumber(fmmode, freq, master, block) {
+  // 144 * 2^20 = 150994944
+  return fmmode ? (150994944.0 * freq / master) / Math.pow(2.0, block - 1.0) :
+                  master / (freq * 64.0);
+}
+
 function createFreqTable() {
   var master = $('.spinner-master').val() * 1.0e6;
   var basefreq = $('.spinner-basefreq').val() * 1.0;
@@ -103,13 +109,7 @@ function createFreqTable() {
 
     for (var i = 0; i < 12; i++, note++) {
       var freq = basefreq * Math.pow(2.0, (note + transpose - 69) / 12.0);
-      var num;
-
-      if (fmmode)
-        num = (144.0 * freq * Math.pow(2.0, 20.0) / master) / Math.pow(2.0, block - 1.0);
-      else
-        num = master / (freq * 64.0);
-      
+      var num = calculateFreqNumber(fmmode, freq, master, block);
       var num_round = rounding(roundingType, num);
       var element = $('<div class="col-xs-1 freq freq-item"></div>')
         .text(num_round | 0 + "")
@@ -145,12 +145,7 @@ function showPopup(note) {
     var roundingType = $('#select-rounding').prop("selectedIndex");
     var fmmode = $('#button-type-fm').prop('checked');
     var freq = basefreq * Math.pow(2.0, (note + transpose - 69) / 12.0);
-
-    if (fmmode)
-      num = (144.0 * freq * Math.pow(2.0, 20.0) / master) / Math.pow(2.0, block - 1.0);
-    else
-      num = master / (freq * 64.0);
-
+    var num = calculateFreqNumber(fmmode, freq, master, block);
     var num_round = rounding(roundingType, num);
     var error = getError(num, num_round) * 100.0;
 
