@@ -1,5 +1,24 @@
 var notechars = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
+// utils functions
+
+function rounding(type, value) {
+  switch(type) {
+    case 1:
+    return Math.floor(value);
+    case 2:
+    return Math.ceil(value);
+    default:
+    return Math.round(value);
+  }
+}
+
+function getError(expect, actual) {
+  return Math.abs(actual - expect) / expect;
+}
+
+// 
+
 $(function() {
   $('.button-type').buttonset().click(createFreqTable);
   $('#spinner-master').spinner({
@@ -42,10 +61,6 @@ $(function() {
   createFreqTable();
 });
 
-function getError(expect, actual) {
-  return Math.abs(actual - expect) / expect;
-}
-
 function setErrorClass(element, expect, actual) {
   var error = getError(expect, actual) * 100;
 
@@ -73,17 +88,6 @@ function setErrorClass(element, expect, actual) {
     element.addClass('freq-error003');
   else if (error >= 0.01)
     element.addClass('freq-error001');
-}
-
-function rounding(type, value) {
-  switch(type) {
-    case 1:
-    return Math.floor(value);
-    case 2:
-    return Math.ceil(value);
-    default:
-    return Math.round(value);
-  }
 }
 
 function calculateFreqNumber(fmmode, freq, master, block) {
