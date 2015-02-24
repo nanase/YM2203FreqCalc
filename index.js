@@ -1,3 +1,5 @@
+var notechars = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
 $(function() {
   $('.button-type').buttonset().click(createFreqTable);
   $('#spinner-master').spinner({
@@ -150,6 +152,7 @@ function showPopup(note) {
     var num_round = rounding(v.roundingType, num);
     var error = getError(num, num_round) * 100.0;
 
+    $('#popup-midinum').text(notechars[note % 12] + (((note / 12) | 0) - 1));
     $('#popup-notenum').text(note);
     $('#popup-freq').text(Math.round(freq * 10.0) / 10.0);
     $('#popup-num').text(num_round);
