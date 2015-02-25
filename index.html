@@ -18,138 +18,139 @@
         <li class="active"><a href="#">Home</a></li>
         <li><a href="https://github.com/nanase/YM2203FreqCalc" target="_blank">Repository</a></li>
       </ul>
-    <h3 class="text-muted">YM2203 Frequency Calculator</h3>
-    <hr />
-  </div>
-  <div>
-    <div class="row">
-      <div class="col-xs-8 col-xs-push-4">
-        <div class="row">
-          <div class="col-xs-1 freq freq-head">C</div>
-          <div class="col-xs-1 freq freq-head">C#</div>
-          <div class="col-xs-1 freq freq-head">D</div>
-          <div class="col-xs-1 freq freq-head">D#</div>
-          <div class="col-xs-1 freq freq-head">E</div>
-          <div class="col-xs-1 freq freq-head">F</div>
-          <div class="col-xs-1 freq freq-head">F#</div>
-          <div class="col-xs-1 freq freq-head">G</div>
-          <div class="col-xs-1 freq freq-head">G#</div>
-          <div class="col-xs-1 freq freq-head">A</div>
-          <div class="col-xs-1 freq freq-head">A#</div>
-          <div class="col-xs-1 freq freq-head">B</div>
-        </div>
-        <div id="table-freq">
+      <h3 class="text-muted">YM2203 Frequency Calculator</h3>
+      <hr />
+    </div>
+    <div>
+      <div class="row">
+        <div class="col-xs-8 col-xs-push-4">
+          <div class="row">
+            <div class="col-xs-1 freq freq-head">C</div>
+            <div class="col-xs-1 freq freq-head">C#</div>
+            <div class="col-xs-1 freq freq-head">D</div>
+            <div class="col-xs-1 freq freq-head">D#</div>
+            <div class="col-xs-1 freq freq-head">E</div>
+            <div class="col-xs-1 freq freq-head">F</div>
+            <div class="col-xs-1 freq freq-head">F#</div>
+            <div class="col-xs-1 freq freq-head">G</div>
+            <div class="col-xs-1 freq freq-head">G#</div>
+            <div class="col-xs-1 freq freq-head">A</div>
+            <div class="col-xs-1 freq freq-head">A#</div>
+            <div class="col-xs-1 freq freq-head">B</div>
+          </div>
+          <div id="table-freq">
 
-        </div>
-        <hr />
-        <div class="row" id="table-error">
-          <div class="row">
-            <h4>誤差表示と値</h4>
           </div>
-          <div class="row">
-            <div class="col-xs-1 freq-error001">0.01%</div>
-            <div class="col-xs-1 freq-error003">0.02%</div>
-            <div class="col-xs-1 freq-error005">0.04%</div>
-            <div class="col-xs-1 freq-error01">0.10%</div>
-            <div class="col-xs-1 freq-error03">0.22%</div>
-            <div class="col-xs-1 freq-error05">0.46%</div>
-            <div class="col-xs-1 freq-error1">1.0%</div>
-            <div class="col-xs-1 freq-error3">2.2%</div>
-            <div class="col-xs-1 freq-error5">4.6%</div>
-            <div class="col-xs-1 freq-error10">10%</div>
-            <div class="col-xs-1 freq-error30">22%</div>
-            <div class="col-xs-1 freq-error50">46%</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4 col-sm-pull-8 col-control">
-        <div class="row">
-          <div class="col-xs-8 col-xs-offset-2">
-            <div class="button-type">
-              <input type="radio" id="button-type-psg" name="button-type" checked="checked" /><label for="button-type-psg">PSG音源</label>
-              <input type="radio" id="button-type-fm"  name="button-type" /><label for="button-type-fm">FM音源</label>
+          <hr />
+          <div class="row" id="table-error">
+            <div class="row">
+              <h4>誤差表示と値</h4>
+            </div>
+            <div class="row">
+              <div class="col-xs-1 freq-error001">0.01%</div>
+              <div class="col-xs-1 freq-error003">0.02%</div>
+              <div class="col-xs-1 freq-error005">0.04%</div>
+              <div class="col-xs-1 freq-error01">0.10%</div>
+              <div class="col-xs-1 freq-error03">0.22%</div>
+              <div class="col-xs-1 freq-error05">0.46%</div>
+              <div class="col-xs-1 freq-error1">1.0%</div>
+              <div class="col-xs-1 freq-error3">2.2%</div>
+              <div class="col-xs-1 freq-error5">4.6%</div>
+              <div class="col-xs-1 freq-error10">10%</div>
+              <div class="col-xs-1 freq-error30">22%</div>
+              <div class="col-xs-1 freq-error50">46%</div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-6 col-control-name">
-            <label for="spinner-master">マスタクロック:</label>
+        <div class="col-sm-4 col-sm-pull-8 col-control">
+          <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+              <div class="button-type">
+                <input type="radio" id="button-type-psg" name="button-type" checked="checked" /><label for="button-type-psg">PSG音源</label>
+                <input type="radio" id="button-type-fm"  name="button-type" /><label for="button-type-fm">FM音源</label>
+              </div>
+            </div>
           </div>
-          <div class="col-xs-6">
-            <input class="spinner spinner-master" id="spinner-master" value="4.0" />
-            <span class="col-control-unit">MHz</span>
+          <div class="row">
+            <div class="col-xs-6 col-control-name">
+              <label for="spinner-master">マスタクロック:</label>
+            </div>
+            <div class="col-xs-6">
+              <input class="spinner spinner-master" id="spinner-master" value="4.0" />
+              <span class="col-control-unit">MHz</span>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6 col-control-name">
-            <label for="spinner-basefreq">基準周波数:</label>
+          <div class="row">
+            <div class="col-xs-6 col-control-name">
+              <label for="spinner-basefreq">基準周波数:</label>
+            </div>
+            <div class="col-xs-6">
+              <input class="spinner spinner-basefreq" id="spinner-basefreq" value="440.0" />
+              <span class="col-control-unit">Hz</span>
+            </div>
           </div>
-          <div class="col-xs-6">
-            <input class="spinner spinner-basefreq" id="spinner-basefreq" value="440.0" />
-            <span class="col-control-unit">Hz</span>
+          <div class="row">
+            <div class="col-xs-6 col-control-name">
+              <label for="spinner-transpose">トランスポーズ:</label>
+            </div>
+            <div class="col-xs-6">
+              <input class="spinner spinner-transpose" id="spinner-transpose" value="0" />
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6 col-control-name">
-            <label for="spinner-transpose">トランスポーズ:</label>
+          <div class="row">
+            <div class="col-xs-6 col-control-name">
+              <label for="spinner-block">ブロック値:</label>
+            </div>
+            <div class="col-xs-6">
+              <input class="spinner spinner-block" id="spinner-block" value="0" />
+            </div>
           </div>
-          <div class="col-xs-6">
-            <input class="spinner spinner-transpose" id="spinner-transpose" value="0" />
+          <div class="row">
+            <div class="col-xs-6 col-control-name">
+              <label for="select-rounding">端数処理:</label>
+            </div>
+            <div class="col-xs-6">
+              <select class="select select-rounding" id="select-rounding">
+                <option selected="selected">四捨五入</option>
+                <option>切り捨て</option>
+                <option>切り上げ</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6 col-control-name">
-            <label for="spinner-block">ブロック値:</label>
+          <div class="row">
+            <div class="col-xs-6 col-control-name">
+              <label for="select-error">誤差強調:</label>
+            </div>
+            <div class="col-xs-6">
+              <select class="select select-error" id="select-error">
+                <option selected="selected">表示する</option>
+                <option>表示しない</option>
+              </select>
+            </div>
           </div>
-          <div class="col-xs-6">
-            <input class="spinner spinner-block" id="spinner-block" value="0" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6 col-control-name">
-            <label for="select-rounding">端数処理:</label>
-          </div>
-          <div class="col-xs-6">
-            <select class="select select-rounding" id="select-rounding">
-              <option selected="selected">四捨五入</option>
-              <option>切り捨て</option>
-              <option>切り上げ</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6 col-control-name">
-            <label for="select-error">誤差強調:</label>
-          </div>
-          <div class="col-xs-6">
-            <select class="select select-error" id="select-error">
-              <option selected="selected">表示する</option>
-              <option>表示しない</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-6 col-control-name">
-            <label for="select-invalid">無効表示:</label>
-          </div>
-          <div class="col-xs-6">
-            <select class="select select-invalid" id="select-invalid">
-              <option selected="selected">表示する</option>
-              <option>表示しない</option>
-            </select>
+          <div class="row">
+            <div class="col-xs-6 col-control-name">
+              <label for="select-invalid">無効表示:</label>
+            </div>
+            <div class="col-xs-6">
+              <select class="select select-invalid" id="select-invalid">
+                <option selected="selected">表示する</option>
+                <option>表示しない</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
+      <div class="footer">
+        <hr />
+        <p>Copyright &copy; 2015 Tomona Nanase</p>
+      </div>
     </div>
-    <div class="footer">
-      <hr />
-      <p>Copyright &copy; 2015 Tomona Nanase</p>
+    <div class="popup popup-freq">
+      ノートナンバ: <span id="popup-notenum"></span> (<span id="popup-midinum"></span>)<br />
+      周波数: <span id="popup-freq"></span> Hz<br />
+      設定値: <span id="popup-num"></span> (誤差: <span id="popup-error"></span> %)
     </div>
-  </div>
-  <div class="popup popup-freq">
-    ノートナンバ: <span id="popup-notenum"></span> (<span id="popup-midinum"></span>)<br />
-    周波数: <span id="popup-freq"></span> Hz<br />
-    設定値: <span id="popup-num"></span> (誤差: <span id="popup-error"></span> %)
   </div>
   <script src="jquery-ui.min.js"></script>
 </body>
